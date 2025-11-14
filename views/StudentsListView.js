@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import StudentController from '../controllers/StudentController';
 
-export default function StudentsListView() {
+export default function StudentsListView({ navigation }) {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -30,6 +30,12 @@ export default function StudentsListView() {
         keyExtractor={(item) => item.id}
         style={styles.list}
       />
+      <TouchableOpacity 
+        style={styles.backButton} 
+        onPress={() => navigation.navigate('AddStudent')}
+      >
+        <Text style={styles.backButtonText}>VOLVER</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -42,7 +48,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: 'white',
+    color: '#FFFFFF',
     fontWeight: 'bold',
     marginBottom: 20,
     marginTop: 20,
@@ -51,13 +57,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   studentItem: {
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
     padding: 15,
     marginBottom: 10,
     borderRadius: 5,
   },
   studentText: {
     fontSize: 16,
-    color: '#333',
+    color: '#333333',
+  },
+  backButton: {
+    backgroundColor: '#E91E63',
+    padding: 15,
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  backButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });

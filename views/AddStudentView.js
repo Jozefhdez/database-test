@@ -8,6 +8,11 @@ export default function AddStudentView({ navigation }) {
   const [semestre, setSemestre] = useState('');
 
   const handleSubmit = async () => {
+    if (!matricula || !nombre || !semestre) {
+      Alert.alert('Error', 'Todos los campos son requeridos');
+      return;
+    }
+    
     await StudentController.addStudent(matricula, nombre, semestre);
     Alert.alert('Éxito', 'Estudiante agregado correctamente');
     setMatricula('');
@@ -24,7 +29,6 @@ export default function AddStudentView({ navigation }) {
         placeholder="Matrícula"
         value={matricula}
         onChangeText={setMatricula}
-        placeholderTextColor="#999"
       />
       
       <TextInput
@@ -32,7 +36,6 @@ export default function AddStudentView({ navigation }) {
         placeholder="Nombre"
         value={nombre}
         onChangeText={setNombre}
-        placeholderTextColor="#999"
       />
       
       <TextInput
@@ -40,8 +43,6 @@ export default function AddStudentView({ navigation }) {
         placeholder="Semestre"
         value={semestre}
         onChangeText={setSemestre}
-        keyboardType="numeric"
-        placeholderTextColor="#999"
       />
       
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -49,10 +50,10 @@ export default function AddStudentView({ navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity 
-        style={styles.fab} 
+        style={styles.viewButton} 
         onPress={() => navigation.navigate('Students')}
       >
-        <Text style={styles.fabText}>📧</Text>
+        <Text style={styles.viewButtonText}>VER REGISTROS</Text>
       </TouchableOpacity>
     </View>
   );
@@ -66,18 +67,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: 'white',
+    color: '#FFFFFF',
     fontWeight: 'bold',
     marginBottom: 40,
     marginTop: 20,
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: '#FFFFFF',
     borderBottomWidth: 2,
     borderBottomColor: '#E91E63',
     padding: 15,
     marginBottom: 20,
     fontSize: 16,
+    color: '#000000',
   },
   button: {
     backgroundColor: '#BDBDBD',
@@ -90,23 +92,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  fab: {
-    position: 'absolute',
-    bottom: 30,
-    right: 30,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+  viewButton: {
     backgroundColor: '#E91E63',
-    justifyContent: 'center',
+    padding: 15,
     alignItems: 'center',
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
+    marginTop: 15,
   },
-  fabText: {
-    fontSize: 24,
+  viewButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
